@@ -97,24 +97,26 @@
   });
 
   function post(payload, onProgress) {
-    return new Promise((resolve, reject) => {
-      if (!ENDPOINT) { // próbaüzem
-        let p = 0; const t = setInterval(() => { p += 0.2; onProgress(Math.min(p, 1)); if (p >= 1) { clearInterval(t); resolve({ ok: true, test: true }); } }, 120);
-        return;
-      }
-      const xhr = new XMLHttpRequest();
-      xhr.open("POST", ENDPOINT);
-      xhr.setRequestHeader("Content-Type", "text/plain;charset=utf-8"); // egyszerű kérés, nincs preflight
-      xhr.upload.onprogress = e => e.lengthComputable && onProgress(e.loaded / e.total * 0.95);
-      xhr.onload = () => {
-        let r = null; try { r = JSON.parse(xhr.responseText); } catch (e) {}
-        if (xhr.status === 200 && r && r.ok && r.id) resolve(r);
-        else if (r && r.ok && !r.id) reject(new Error("A szerveren még a régi szkriptverzió fut (nincs fotómentés)."));
-        else reject(new Error((r && r.error) || "HTTP " + xhr.status));
-      };
-      xhr.onerror = () => reject(new Error("Hálózati hiba"));
-      xhr.send(JSON.stringify(payload));
-    });
+    // FONTOS: egyszerű (preflight nélküli) kérés kell, mert az Apps Script nem válaszol OPTIONS-re.
+    // Ezért nincs feltöltési progress-figyelő (az preflightot váltana ki) – a csíkot becsüljük.
+    let p = 0;
+    const tick = setInterval(() => { p += (0.9 - p) * 0.08; onProgress(p); }, 250);
+    const done = () => clearInterval(tick);
+    if (!ENDPOINT) { // próbaüzem
+      return new Promise(r => setTimeout(r, 1200)).then(() => { done(); return { ok: true, test: true }; });
+    }
+    return fetch(ENDPOINT, {
+      method: "POST",
+      headers: { "Content-Type": "text/plain;charset=utf-8" },
+      body: JSON.stringify(payload),
+      redirect: "follow"
+    }).then(async res => {
+      done();
+      let r = null; try { r = await res.json(); } catch (e) {}
+      if (res.ok && r && r.ok && r.id) return r;
+      if (r && r.ok && !r.id) throw new Error("A szerveren még a régi szkriptverzió fut (nincs fotómentés).");
+      throw new Error((r && r.error) || "HTTP " + res.status);
+    }, err => { done(); throw new Error("Hálózati hiba – ellenőrizd az internetkapcsolatot, és próbáld újra."); });
   }
 
   async function uploadOne(item, who) {
