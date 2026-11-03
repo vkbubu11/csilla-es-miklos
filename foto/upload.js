@@ -108,7 +108,9 @@
       xhr.upload.onprogress = e => e.lengthComputable && onProgress(e.loaded / e.total * 0.95);
       xhr.onload = () => {
         let r = null; try { r = JSON.parse(xhr.responseText); } catch (e) {}
-        if (xhr.status === 200 && r && r.ok) resolve(r); else reject(new Error((r && r.error) || "HTTP " + xhr.status));
+        if (xhr.status === 200 && r && r.ok && r.id) resolve(r);
+        else if (r && r.ok && !r.id) reject(new Error("A szerveren még a régi szkriptverzió fut (nincs fotómentés)."));
+        else reject(new Error((r && r.error) || "HTTP " + xhr.status));
       };
       xhr.onerror = () => reject(new Error("Hálózati hiba"));
       xhr.send(JSON.stringify(payload));

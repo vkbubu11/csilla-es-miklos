@@ -10,7 +10,7 @@ window.WEDDING = {
   /* A Google Apps Script webalkalmazás URL-je (lásd OLVASS_EL.md).
      Ez fogadja a visszajelzéseket ÉS a vendégek fotóit is.
      Amíg üres, az űrlap és a fotófeltöltő csak próbaüzemben fut. */
-  scriptUrl: "",
+  scriptUrl: "https://script.google.com/macros/s/AKfycbzp7QIuhVA2jOf4w1VmISq1ktKBYM_Gkuq7-lw60xtq9M8zy2Da0IapilurtTd2QadDrw/exec",
 
   /* Visszajelzési határidő – üresen hagyva nem jelenik meg. Pl.: "2027. április 30." */
   rsvpDeadline: "",
