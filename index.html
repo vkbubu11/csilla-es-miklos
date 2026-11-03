@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Csilla &amp; Miklós · 2027. június 5.</title>
+  <meta name="description" content="Budai Csilla és Vincze Miklós esküvője – 2027. június 5., Vitnyéd">
+  <meta name="theme-color" content="#1F2A44">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Great+Vibes&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Navigáció -->
+  <header class="nav" id="nav">
+    <a class="nav__brand" href="#top">Cs <span>&amp;</span> M</a>
+    <nav class="nav__links" aria-label="Főmenü">
+      <a href="#reszletek">Részletek</a>
+      <a href="#program">Program</a>
+      <a href="#utazasaink">Utazásaink</a>
+      <a href="#galeria">Galéria</a>
+      <a href="#visszajelzes" class="nav__cta">Visszajelzés</a>
+    </nav>
+  </header>
+
+  <main id="top">
+
+    <!-- Nyitókép -->
+    <section class="hero">
+      <div class="hero__photo">
+        <img src="img/hero.jpg" alt="Csilla és Miklós" loading="eager">
+      </div>
+      <div class="band"><span>Igent mondunk</span></div>
+      <div class="hero__text">
+        <p class="eyebrow">Szeretettel meghívunk, hogy velünk ünnepelj<br>házasságkötésünk alkalmából</p>
+        <h1 class="names">
+          <span>Csilla</span>
+          <span class="amp">&amp;</span>
+          <span>Miklós</span>
+        </h1>
+        <div class="daterow" aria-label="2027. június 5., szombat">
+          <span>Szombat</span><b>05</b><span>Június</span>
+        </div>
+        <p class="year">2027 · <em>16 órakor</em></p>
+        <div class="countdown" id="countdown" aria-live="polite"></div>
+        <a class="btn" href="#visszajelzes">Visszajelzek</a>
+      </div>
+    </section>
+
+    <!-- Részletek -->
+    <section class="section" id="reszletek">
+      <h2 class="title">A nagy nap</h2>
+      <p class="script-sub">nagy szeretettel…</p>
+      <div class="cards" id="venues"></div>
+    </section>
+
+    <!-- Program -->
+    <section class="section section--tint" id="program">
+      <h2 class="title">A nap menete</h2>
+      <ol class="timeline" id="timeline"></ol>
+    </section>
+
+    <!-- Utazások földgömbön -->
+    <section class="section" id="utazasaink">
+      <h2 class="title">Utazásaink a világ körül</h2>
+      <p class="lead">Forgasd meg a földgömböt, és kattints egy rajzszögre vagy egy helyre – megmutatjuk, mit láttunk ott együtt.</p>
+      <div class="globe-wrap">
+        <div id="globe" class="globe" role="img" aria-label="Interaktív földgömb az utazásainkkal"></div>
+        <aside class="trips">
+          <ul class="trip-chips" id="tripList" aria-label="Helyek, ahol jártunk"></ul>
+          <div class="trip-detail" id="tripDetail" aria-live="polite"></div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- Galéria -->
+    <section class="section section--tint" id="galeria">
+      <h2 class="title">Közös pillanataink</h2>
+      <div class="gallery" id="gallery"></div>
+    </section>
+
+    <!-- Visszajelzés -->
+    <section class="section" id="visszajelzes">
+      <h2 class="title">Visszajelzés</h2>
+      <p class="lead" id="rsvpLead">Kérjük, jelezd, hogy számíthatunk-e rád!</p>
+
+      <form class="rsvp" id="rsvpForm" novalidate>
+        <div class="field">
+          <label for="f-name">Neved *</label>
+          <input id="f-name" name="nev" type="text" autocomplete="name" required>
+        </div>
+
+        <fieldset class="field">
+          <legend>Ott leszel? *</legend>
+          <div class="choice">
+            <label><input type="radio" name="reszvetel" value="Igen, ott leszek" required> <span>Igen, ott leszek</span></label>
+            <label><input type="radio" name="reszvetel" value="Sajnos nem tudok menni"> <span>Sajnos nem tudok menni</span></label>
+          </div>
+        </fieldset>
+
+        <div class="if-yes" id="ifYes">
+          <div class="field-row">
+            <div class="field">
+              <label for="f-adults">Felnőttek száma (veled együtt)</label>
+              <input id="f-adults" name="felnottek" type="number" min="1" max="10" value="1" inputmode="numeric">
+            </div>
+            <div class="field">
+              <label for="f-kids">Gyerekek száma</label>
+              <input id="f-kids" name="gyerekek" type="number" min="0" max="10" value="0" inputmode="numeric">
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="f-companions">Kísérőid neve</label>
+            <input id="f-companions" name="kiserok" type="text" placeholder="pl. Kiss Anna, Kiss Bence (6 éves)">
+          </div>
+
+          <fieldset class="field">
+            <legend>Kérsz szállást?</legend>
+            <p class="note">A szállást sajnos csak a családnak van módunk állni, de szívesen lefoglaljuk mindenkinek, aki időben visszajelez.</p>
+            <div class="choice">
+              <label><input type="radio" name="szallas" value="Igen, kérem foglaljatok"> <span>Igen, kérem foglaljatok</span></label>
+              <label><input type="radio" name="szallas" value="Nem" checked> <span>Nem</span></label>
+            </div>
+          </fieldset>
+
+          <div class="field">
+            <label for="f-song">Melyik zenére táncolnál biztosan?</label>
+            <input id="f-song" name="zene" type="text" placeholder="Előadó – szám címe">
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="f-msg">Üzenet nekünk</label>
+          <textarea id="f-msg" name="uzenet" rows="3"></textarea>
+        </div>
+
+        <!-- spam elleni csapda: ember nem tölti ki -->
+        <input class="hp" type="text" name="weboldal" tabindex="-1" autocomplete="off" aria-hidden="true">
+
+        <button class="btn btn--wide" type="submit" id="rsvpSubmit">Visszajelzés elküldése</button>
+        <p class="form-msg" id="formMsg" role="status"></p>
+      </form>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p class="script-sub">Csilla &amp; Miklós</p>
+    <p>2027. június 5. · Vitnyéd</p>
+  </footer>
+
+  <!-- Színválasztó -->
+  <div class="theme" id="theme">
+    <button class="theme__toggle" id="themeToggle" aria-expanded="false" aria-controls="themePanel" title="Színvilág választása">
+      <span class="theme__dot"></span><span class="theme__label">Színek</span>
+    </button>
+    <div class="theme__panel" id="themePanel" hidden>
+      <p>Válassz színvilágot</p>
+      <div class="theme__list" id="themeList"></div>
+    </div>
+  </div>
+
+  <!-- Képnéző -->
+  <div class="lightbox" id="lightbox" hidden role="dialog" aria-modal="true" aria-label="Képnéző">
+    <button class="lb__close" id="lbClose" aria-label="Bezárás">×</button>
+    <button class="lb__nav lb__prev" id="lbPrev" aria-label="Előző kép">‹</button>
+    <figure class="lb__fig">
+      <img id="lbImg" alt="">
+      <figcaption id="lbCap"></figcaption>
+    </figure>
+    <button class="lb__nav lb__next" id="lbNext" aria-label="Következő kép">›</button>
+    <div class="lb__thumbs" id="lbThumbs"></div>
+  </div>
+
+  <script src="js/vendor/globe.gl.min.js" defer></script>
+  <script src="js/globe-textures.js" defer></script>
+  <script src="js/flags.js" defer></script>
+  <script src="js/config.js" defer></script>
+  <script src="js/photos.js" defer></script>
+  <script src="js/app.js" defer></script>
+</body>
+</html>
