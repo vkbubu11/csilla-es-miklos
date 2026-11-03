@@ -27,22 +27,29 @@ kepek_frissitese.py        fotók átméretezése + a js/photos.js frissítése
 Elég duplán kattintani az `index.html` fájlra – a földgömb textúrái a
 `js/globe-textures.js` fájlba vannak beágyazva, így helyben is betöltődik.
 
-## 2. Visszajelzések → Google-táblázat
+## 2. Visszajelzések → Google-táblázat, vendégfotók → Drive-mappa
 
 1. Nyisd meg a táblázatot (`1yZPWlrGTgUjzqazCkQXOBufLiN8udm2YCKTDJjeABuM`) → **Bővítmények → Apps Script**.
 2. A mintakód helyére másold be az `apps-script/Code.gs` teljes tartalmát, majd ments.
+   Futtasd egyszer a `proba` függvényt, és engedélyezd a táblázat és a Drive elérését.
 3. **Telepítés → Új telepítés** → típus: **Webalkalmazás**
    - Végrehajtás mint: **Én**
    - Hozzáférés: **Bárki**
 4. Engedélyezd a hozzáférést, és másold ki a **Webalkalmazás URL**-t (`https://script.google.com/macros/s/…/exec`).
-5. Írd be a `js/config.js` fájlban: `rsvpEndpoint: "https://script.google.com/macros/s/…/exec"`.
+5. Írd be a `js/config.js` fájlban: `scriptUrl: "https://script.google.com/macros/s/…/exec"`.
 
 A szkript a táblázatban létrehoz egy **Visszajelzések** munkalapot fejléccel, és minden
 beküldés egy új sor lesz benne (időpont, név, részvétel, létszám, kísérők, szállás,
 zenekérés, elérhetőség, üzenet, választott színvilág).
 Próba: az Apps Script szerkesztőben futtasd a `proba` függvényt – egy tesztsor jelenik meg.
 
-Amíg az `rsvpEndpoint` üres, az űrlap próbaüzemben fut: működik, de nem ment semmit.
+Amíg a `scriptUrl` üres, az űrlap és a fotófeltöltő próbaüzemben fut: működik, de nem ment semmit.
+
+**Vendégfotók:** a `foto/` oldal (https://vkbubu11.github.io/csilla-es-miklos/foto/) – erre mutat a
+meghívó „Osszátok meg” QR-kódja. A vendég kiválasztja a képeket a telefonja galériájából, a
+szkript pedig a `FOTO_MAPPA_ID` Drive-mappába menti őket `dátum_név_fájlnév` formában, és
+naplózza a táblázat „Fotófeltöltések” lapján. A nagy képeket a böngésző 3200 px-re kicsinyíti;
+videó legfeljebb 30 MB lehet (az Apps Script kérésméret-korlátja miatt). Bejelentkezés nem kell.
 
 ## 3. Fotók
 

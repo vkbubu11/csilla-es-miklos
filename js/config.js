@@ -8,8 +8,9 @@ window.WEDDING = {
   date: "2027-06-05T16:00:00+02:00",
 
   /* A Google Apps Script webalkalmazás URL-je (lásd OLVASS_EL.md).
-     Amíg üres, az űrlap csak próbaüzemben fut és nem ment semmit. */
-  rsvpEndpoint: "",
+     Ez fogadja a visszajelzéseket ÉS a vendégek fotóit is.
+     Amíg üres, az űrlap és a fotófeltöltő csak próbaüzemben fut. */
+  scriptUrl: "",
 
   /* Visszajelzési határidő – üresen hagyva nem jelenik meg. Pl.: "2027. április 30." */
   rsvpDeadline: "",

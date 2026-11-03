@@ -2,6 +2,7 @@
 (() => {
   "use strict";
   const W = window.WEDDING;
+  const ENDPOINT = W.scriptUrl || W.rsvpEndpoint || "";
   const P = window.PHOTOS || { gallery: [], travels: {} };
   const $ = (s, el = document) => el.querySelector(s);
   const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
@@ -130,7 +131,7 @@
   /* ---------------- Galéria ---------------- */
   function initGallery() {
     const g = $("#gallery"), items = P.gallery || [];
-    if (!items.length) { $("#galeria").hidden = true; return; }
+    if (!items.length) { g.hidden = true; return; }
     g.innerHTML = items.map((it, k) => `
       <button class="reveal" data-k="${k}" aria-label="Kép megnyitása${it.caption ? ": " + esc(it.caption) : ""}">
         <img src="${esc(it.thumb || it.src)}" alt="${esc(it.caption || "Közös fotó")}" loading="lazy" ${it.w ? `width="${it.w}" height="${it.h}"` : ""}>
@@ -265,16 +266,16 @@
 
       btn.disabled = true; btn.textContent = "Küldés…";
       try {
-        if (!W.rsvpEndpoint) {
+        if (!ENDPOINT) {
           console.info("Próbaüzem – ezt küldené:", data);
           await new Promise(r => setTimeout(r, 600));
         } else {
           // Apps Script: egyszerű (preflight nélküli) POST, a válasz átlátszatlan
-          await fetch(W.rsvpEndpoint, { method: "POST", mode: "no-cors", body: new URLSearchParams(data) });
+          await fetch(ENDPOINT, { method: "POST", mode: "no-cors", body: new URLSearchParams(data) });
         }
         msg.className = "form-msg ok";
         msg.textContent = yes ? `Köszönjük, ${name.split(" ").pop()}! Nagyon várunk! 💛` : `Köszönjük, hogy jelezted, ${name.split(" ").pop()}! Hiányozni fogsz.`;
-        if (!W.rsvpEndpoint) msg.textContent += " (próbaüzem – a táblázat még nincs bekötve)";
+        if (!ENDPOINT) msg.textContent += " (próbaüzem – a táblázat még nincs bekötve)";
         f.reset(); syncYes();
         btn.textContent = "Elküldve ✓";
         setTimeout(() => { btn.disabled = false; btn.textContent = "Visszajelzés elküldése"; }, 4000);

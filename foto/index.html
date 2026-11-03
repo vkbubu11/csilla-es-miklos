@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Fotók feltöltése · Csilla &amp; Miklós</title>
+  <meta name="description" content="Töltsd fel az esküvőn készült fotóidat Csillának és Miklósnak!">
+  <meta name="theme-color" content="#1F2A44">
+  <meta name="robots" content="noindex">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Great+Vibes&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+  <style>
+    body { min-height: 100svh; display: flex; flex-direction: column; }
+    .up-head { background: var(--band); color: var(--band-text); text-align: center; padding: 1.4rem 1rem 1.1rem; }
+    .up-head .names { color: var(--band-text); font-size: clamp(2.4rem, 9vw, 3.4rem); line-height: 1.05; }
+    .up-head .names span { display: inline; font-size: inherit; }
+    .up-head p { margin: .5rem 0 0; letter-spacing: .2em; text-transform: uppercase; font-size: .78rem; opacity: .9; }
+    .up-main { flex: 1; width: 100%; max-width: 640px; margin: 0 auto; padding: 1.6rem 1rem 7rem; }
+    .up-lead { text-align: center; font-style: italic; margin: 0 0 1.1rem; font-size: 1.1rem; line-height: 1.4; }
+    .picker {
+      display: grid; place-items: center; gap: .4rem; text-align: center; cursor: pointer;
+      border: 2px dashed color-mix(in srgb, var(--rule) 80%, transparent); border-radius: 22px;
+      background: var(--tint); padding: 1.6rem 1rem; transition: border-color .2s, background .2s;
+    }
+    .picker:hover, .picker.drag { border-color: var(--accent); background: color-mix(in srgb, var(--rule) 18%, var(--bg)); }
+    .picker svg { width: 54px; height: 54px; color: var(--accent); }
+    .picker b { font-family: var(--sans); font-weight: 500; letter-spacing: .14em; text-transform: uppercase; font-size: .85rem; color: var(--accent); }
+    .picker small { opacity: .75; }
+    .picker input { position: absolute; width: 1px; height: 1px; opacity: 0; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(96px, 1fr)); gap: .5rem; margin: 1.2rem 0; }
+    .thumb { position: relative; aspect-ratio: 1; border-radius: 12px; overflow: hidden; background: var(--tint); }
+    .thumb img, .thumb video { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .thumb .x { position: absolute; top: 4px; right: 4px; width: 26px; height: 26px; border-radius: 50%; border: 0; cursor: pointer;
+      background: rgba(0,0,0,.55); color: #fff; font-size: 16px; line-height: 26px; padding: 0; }
+    .thumb .bar { position: absolute; left: 0; bottom: 0; height: 5px; width: 0; background: var(--band); transition: width .3s; }
+    .thumb .st { position: absolute; inset: 0; display: grid; place-items: center; font-size: 1.9rem; color: #fff; background: rgba(0,0,0,.35); opacity: 0; transition: opacity .3s; }
+    .thumb.done .st { opacity: 1; background: color-mix(in srgb, var(--band) 55%, transparent); }
+    .thumb.err .st { opacity: 1; background: rgba(179,38,30,.6); }
+    .thumb.done .x, .thumb.busy .x { display: none; }
+    .thumb.busy::after { content: ""; position: absolute; inset: 0; background: rgba(255,255,255,.35); }
+    .thumb .vid { position: absolute; left: 6px; bottom: 8px; font-family: var(--sans); font-size: .65rem; color: #fff; background: rgba(0,0,0,.5); padding: 1px 6px; border-radius: 99px; }
+    .summary { text-align: center; font-family: var(--sans); font-size: .8rem; letter-spacing: .08em; opacity: .8; min-height: 1.2em; }
+    .bar-fixed {
+      position: fixed; left: 0; right: 0; bottom: 0; padding: .8rem 1rem max(.8rem, env(safe-area-inset-bottom));
+      background: color-mix(in srgb, var(--bg) 92%, transparent); backdrop-filter: blur(8px); border-top: 1px solid var(--line);
+    }
+    .bar-fixed .btn { display: block; max-width: 640px; margin: 0 auto; width: 100%; }
+    .total { height: 4px; max-width: 640px; margin: 0 auto .6rem; background: var(--line); border-radius: 99px; overflow: hidden; }
+    .total i { display: block; height: 100%; width: 0; background: var(--band); transition: width .3s; }
+    .thanks { text-align: center; padding: 1rem 0; }
+    .thanks .script-sub { margin: 0; }
+    .back { display: block; text-align: center; margin-top: 1.4rem; font-family: var(--sans); font-size: .8rem; letter-spacing: .12em; text-transform: uppercase; }
+    .theme { bottom: 6.2rem; }
+  </style>
+</head>
+<body>
+  <header class="up-head">
+    <h1 class="names" style="margin:0">Csilla <span style="opacity:.75">&amp;</span> Miklós</h1>
+    <p>2027. június 5. · Vitnyéd</p>
+  </header>
+
+  <main class="up-main">
+    <p class="up-lead">Te is fotóztál? Oszd meg velünk a nap legszebb pillanatait – nagyon örülünk minden képnek! 📷</p>
+
+    <div class="field">
+      <label for="who">A neved (nem kötelező)</label>
+      <input id="who" type="text" autocomplete="name" placeholder="pl. Kiss Anna">
+    </div>
+
+    <label class="picker" id="picker">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <rect x="3" y="5" width="18" height="15" rx="2.5"/><circle cx="8.5" cy="10" r="1.8"/><path d="m21 16-5-5-8 9"/><path d="M12 2v5M9.5 4.5 12 2l2.5 2.5"/>
+      </svg>
+      <b>Képek kiválasztása</b>
+      <small>a telefon galériájából · fotók és rövid videók</small>
+      <input id="files" type="file" accept="image/*,video/*" multiple>
+    </label>
+
+    <div class="grid" id="grid"></div>
+    <p class="summary" id="summary"></p>
+    <div class="thanks" id="thanks" hidden>
+      <p class="script-sub">Köszönjük!</p>
+      <p>A képeid megérkeztek hozzánk. Ha van még, nyugodtan válassz újakat.</p>
+    </div>
+    <a class="back" href="../">← Vissza az esküvői oldalra</a>
+  </main>
+
+  <div class="bar-fixed">
+    <div class="total"><i id="total"></i></div>
+    <button class="btn btn--wide" id="send" disabled>Válassz képeket</button>
+  </div>
+
+  <!-- Színválasztó (ugyanaz, mint a főoldalon) -->
+  <div class="theme" id="theme">
+    <button class="theme__toggle" id="themeToggle" aria-expanded="false" aria-controls="themePanel" title="Színvilág választása">
+      <span class="theme__dot"></span><span class="theme__label">Színek</span>
+    </button>
+    <div class="theme__panel" id="themePanel" hidden><p>Válassz színvilágot</p><div class="theme__list" id="themeList"></div></div>
+  </div>
+
+  <script src="../js/config.js"></script>
+  <script src="upload.js"></script>
+</body>
+</html>
