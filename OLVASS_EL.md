@@ -64,10 +64,10 @@ kétbetűs országkód a zászlóhoz, szélesség/hosszúság), hozd létre a ma
 
 ## 4. Színvilágok
 
-A jobb alsó sarokban lévő **Színek** gombbal a meghívó 9 színkombinációja közül lehet választani.
+A jobb alsó sarokban lévő **Színek** gombbal a meghívó 10 színkombinációja közül lehet választani.
 A választás megmarad az adott böngészőben. Linkkel is beállítható, pl.
 `…/index.html?szin=sage` (azonosítók: navy, sage, peach, nude, sunflower, raspberry, coral,
-lavender, terracotta). Az alapértelmezett szín a `palettes` lista első eleme.
+lavender, terracotta, emerald). Az alapértelmezett szín a `palettes` lista első eleme.
 
 ## 5. Közzététel
 

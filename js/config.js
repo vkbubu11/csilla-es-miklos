@@ -34,7 +34,7 @@ window.WEDDING = {
     { time: "24:00", title: "Menyasszonytánc",  note: "és tánc hajnalig",        icon: "dress" }
   ],
 
-  /* Színvilágok – ugyanaz a 9 kombináció, mint a meghívón.
+  /* Színvilágok – ugyanaz a 10 kombináció, mint a meghívón.
      bg: háttér · band: szalag/gombok · bandText: szalag felirata
      accent: nevek, címek · rule: díszítő vonalak · text: szöveg */
   palettes: [
@@ -46,7 +46,8 @@ window.WEDDING = {
     { id: "raspberry",  name: "Málna & mályva",          bg: "#FFFAF8", band: "#AE264C", bandText: "#F3E3D6", accent: "#AE264C", rule: "#CF9599", text: "#4A3A3A", globe: "#CF9599" },
     { id: "coral",      name: "Pink, púderkék & korall", bg: "#FFFFFF", band: "#D34273", bandText: "#FFFFFF", accent: "#D34273", rule: "#99B7D1", text: "#3F4650", globe: "#99B7D1" },
     { id: "lavender",   name: "Levendula & magenta",     bg: "#FCFAFD", band: "#9C7DBA", bandText: "#FFFFFF", accent: "#8E6BAF", rule: "#DC93AB", text: "#47404F", globe: "#C9B3D9" },
-    { id: "terracotta", name: "Terrakotta & olíva",      bg: "#FFF9F4", band: "#C2561F", bandText: "#F6E7D8", accent: "#C2561F", rule: "#7F8B5C", text: "#4A3328", globe: "#EEAB86" }
+    { id: "terracotta", name: "Terrakotta & olíva",      bg: "#FFF9F4", band: "#C2561F", bandText: "#F6E7D8", accent: "#C2561F", rule: "#7F8B5C", text: "#4A3328", globe: "#EEAB86" },
+    { id: "emerald",    name: "Smaragd & antik arany",   bg: "#FAF7F0", band: "#185844", bandText: "#D2B57A", accent: "#185844", rule: "#B08A4F", text: "#102F27", globe: "#78947F" }
   ],
 
   /* Utazások a földgömbön.
