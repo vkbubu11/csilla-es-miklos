@@ -146,46 +146,76 @@
       <circle cx="11.5" cy="8.5" r="3" fill="#fff" opacity=".55"/></svg>`;
   const flag = c => (window.FLAGS ? window.FLAGS(c) : "");
 
+  const placeName = t => t.place || t.country;
   function tripPhotos(t) {
-    return (P.travels[t.folder] || []).map(p => ({ ...p, caption: p.caption || [t.country, t.place].filter(Boolean).join(" · ") }));
+    return (P.travels[t.folder] || []).map(p => ({ ...p, caption: p.caption || [placeName(t), t.place ? t.country : ""].filter(Boolean).join(" · ") }));
   }
 
   function initGlobe() {
-    const trips = W.travels;
+    const trips = W.travels.map((t, k) => ({ ...t, k }));
+    // országonkénti csoportok (a megadás sorrendjében)
+    const groups = [];
+    trips.forEach(t => {
+      let g = groups.find(x => x.country === t.country);
+      if (!g) groups.push(g = { country: t.country, flag: t.flag, places: [] });
+      g.places.push(t); t.g = groups.indexOf(g);
+    });
     const list = $("#tripList"), detail = $("#tripDetail"), el = $("#globe");
-    let globe = null, active = -1;
+    let globe = null;
 
-    list.innerHTML = trips.map((t, k) => `
-      <li><button data-k="${k}" aria-pressed="false">${flag(t.flag)}<span>${esc(t.country)}</span></button></li>`).join("");
+    list.innerHTML = groups.map((g, i) => `
+      <li><button data-g="${i}" aria-pressed="false">${flag(g.flag)}<span>${esc(g.country)}</span>${g.places.length > 1 ? `<small class="chip-n">${g.places.length}</small>` : ""}</button></li>`).join("");
 
-    function renderDetail(t) {
-      const ph = tripPhotos(t);
-      const n = ph.length;
-      const tiles = n
-        ? ph.map((p, i) => `<button class="tile" data-i="${i}" aria-label="${i + 1}. kép megnyitása"><img src="${esc(p.thumb || p.src)}" alt="${esc(p.caption)}" loading="lazy"></button>`).join("")
-        : `<div class="tile tile--empty">Ide kerülnek majd<br>az itteni közös fotóink</div>`;
-      detail.innerHTML = `
-        <header class="trip-head">${flag(t.flag)}
-          <div><h3>${esc(t.country)}</h3><small>${[t.place, n ? n + " fotó" : "fotók hamarosan"].filter(Boolean).map(esc).join(" · ")}</small></div>
-        </header>
-        <div class="tiles tiles--${Math.min(n, 5)}">${tiles}</div>`;
+    const tilesHtml = (ph, off) => ph.length
+      ? `<div class="tiles tiles--${Math.min(ph.length, 5)}">${ph.map((p, i) => `<button class="tile" data-i="${off + i}" aria-label="${esc(p.caption)} – kép megnyitása"><img src="${esc(p.thumb || p.src)}" alt="${esc(p.caption)}" loading="lazy"></button>`).join("")}</div>`
+      : `<div class="tiles"><div class="tile tile--empty">Ide kerülnek majd<br>az itteni közös fotóink</div></div>`;
+
+    function renderDetail(g, focusK) {
+      const all = []; let body = "";
+      const multi = g.places.length > 1;
+      g.places.forEach(t => {
+        const ph = tripPhotos(t);
+        const block = tilesHtml(ph, all.length);
+        all.push(...ph);
+        body += multi
+          ? `<section class="trip-place${t.k === focusK ? " is-focus" : ""}" data-k="${t.k}"><h4><span class="dot"></span>${esc(placeName(t))}<small>${ph.length ? ph.length + " fotó" : "fotók hamarosan"}</small></h4>${block}</section>`
+          : block;
+      });
+      const sub = multi
+        ? `${g.places.length} helyszín: ${g.places.map(placeName).map(esc).join(", ")}`
+        : [g.places[0].place, all.length ? all.length + " fotó" : "fotók hamarosan"].filter(Boolean).map(esc).join(" · ");
+      detail.innerHTML = `<header class="trip-head">${flag(g.flag)}<div><h3>${esc(g.country)}</h3><small>${sub}</small></div></header>${body}`;
       detail.classList.remove("swap"); void detail.offsetWidth; detail.classList.add("swap");
-      detail.querySelectorAll("button.tile").forEach(b => b.addEventListener("click", () => openLightbox(ph, +b.dataset.i)));
+      detail.querySelectorAll("button.tile").forEach(b => b.addEventListener("click", () => openLightbox(all, +b.dataset.i)));
+      const f = detail.querySelector(".trip-place.is-focus");
+      if (f && multi) f.scrollIntoView({ behavior: "smooth", block: "nearest" });
     }
 
-    function select(k, { fly = true, scroll = false } = {}) {
-      active = k; const t = trips[k];
-      list.querySelectorAll("button").forEach(b => b.setAttribute("aria-pressed", +b.dataset.k === k));
-      el.querySelectorAll(".pin").forEach(p => p.classList.toggle("is-active", +p.dataset.k === k));
-      renderDetail(t);
-      if (globe && fly) { globe.controls().autoRotate = false; globe.pointOfView({ lat: t.lat - 4, lng: t.lng, altitude: 1.5 }, 1100); }
+    function view(g, focusK) {
+      if (focusK != null) { const t = trips[focusK]; return { lat: t.lat - 2, lng: t.lng, altitude: 1.2 }; }
+      const lats = g.places.map(t => t.lat), lngs = g.places.map(t => t.lng);
+      const span = Math.max(Math.max(...lats) - Math.min(...lats), Math.max(...lngs) - Math.min(...lngs));
+      return { lat: (Math.max(...lats) + Math.min(...lats)) / 2 - 3, lng: (Math.max(...lngs) + Math.min(...lngs)) / 2, altitude: Math.min(1.6, 1.0 + span / 12) };
+    }
+
+    function select(gi, { focusK = null, fly = true, scroll = false } = {}) {
+      const g = groups[gi];
+      list.querySelectorAll("button").forEach(b => b.setAttribute("aria-pressed", +b.dataset.g === gi));
+      el.querySelectorAll(".pin").forEach(p => {
+        const k = +p.dataset.k;
+        p.classList.toggle("is-active", trips[k].g === gi);
+        p.classList.toggle("is-focus", k === focusK);
+      });
+      renderDetail(g, focusK);
+      if (globe && fly) { globe.controls().autoRotate = false; globe.pointOfView(view(g, focusK), 1100); }
       if (scroll && window.matchMedia("(max-width: 820px)").matches) detail.scrollIntoView({ behavior: "smooth", block: "nearest" });
     }
 
-    list.addEventListener("click", e => { const b = e.target.closest("button"); if (b) select(+b.dataset.k); });
+    list.addEventListener("click", e => { const b = e.target.closest("button"); if (b) select(+b.dataset.g); });
 
-    // kezdetben az első olyan hely, ahol már van fotó
-    const first = Math.max(0, trips.findIndex(t => tripPhotos(t).length));
+    // kezdetben az első ország, ahol már van fotó
+    const firstT = trips.find(t => tripPhotos(t).length) || trips[0];
+    const first = firstT ? firstT.g : 0;
 
     if (typeof Globe !== "function") { el.innerHTML = `<p class="lead">A földgömb nem tölthető be ebben a böngészőben.</p>`; select(first, { fly: false }); return; }
 
@@ -197,13 +227,13 @@
       .showAtmosphere(true)
       .atmosphereColor(currentPalette.globe)
       .atmosphereAltitude(0.18)
-      .htmlElementsData(trips.map((t, k) => ({ ...t, k })))
+      .htmlElementsData(trips)
       .htmlAltitude(0.01)
       .htmlElement(t => {
         const d = document.createElement("div");
-        d.className = "pin"; d.dataset.k = t.k; d.title = t.country;
-        d.innerHTML = `<span class="pin__label">${esc(t.country)}</span>${PIN(currentPalette.band)}`;
-        d.addEventListener("click", ev => { ev.stopPropagation(); select(t.k, { scroll: true }); });
+        d.className = "pin"; d.dataset.k = t.k; d.title = [placeName(t), t.place ? t.country : ""].filter(Boolean).join(", ");
+        d.innerHTML = `<span class="pin__label">${esc(placeName(t))}</span>${PIN(currentPalette.band)}`;
+        d.addEventListener("click", ev => { ev.stopPropagation(); select(t.g, { focusK: t.k, scroll: true }); });
         d.addEventListener("pointerdown", ev => ev.stopPropagation());
         return d;
       })
@@ -214,7 +244,7 @@
       .pointOfView(W.globeStart || { lat: 44, lng: 14, altitude: 1.9 });
 
     const c = globe.controls();
-    c.autoRotate = true; c.autoRotateSpeed = 0.35; c.enableZoom = true; c.minDistance = 150; c.maxDistance = 600;
+    c.autoRotate = true; c.autoRotateSpeed = 0.35; c.enableZoom = true; c.minDistance = 130; c.maxDistance = 600;
     el.addEventListener("pointerdown", () => { c.autoRotate = false; });
     const size = () => { const w = el.clientWidth; globe.width(w).height(w); };
     size(); new ResizeObserver(size).observe(el);

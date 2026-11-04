@@ -50,19 +50,25 @@ window.WEDDING = {
     { id: "emerald",    name: "Smaragd & antik arany",   bg: "#FAF7F0", band: "#185844", bandText: "#D2B57A", accent: "#185844", rule: "#B08A4F", text: "#102F27", globe: "#78947F" }
   ],
 
-  /* Utazások a földgömbön.
-     folder: az img/utazasok/ alatti mappa neve – az abban lévő képek
-     automatikusan felkerülnek (a js/photos.js fájlt a kepek_frissitese.py írja).
-     flag: kétbetűs országkód (it, gr, es, cz, sk, tn, hu, fr, de, at, hr, pt, gb, us…)
-     lat/lng: a rajzszög helye fokban. Új ország = új sor + új mappa. */
+  /* Utazások a földgömbön – minden meglátogatott HELY egy rajzszög.
+     Az azonos "country" nevű helyek egy országként jelennek meg a listában
+     (pl. Horvátország → Pula és Rovinj két rajzszöggel).
+     folder: az img/utazasok/ alatti mappa – az ott lévő képek automatikusan
+       felkerülnek (a js/photos.js fájlt a kepek_frissitese.py írja).
+     flag: kétbetűs országkód (it, gr, es, cz, sk, tn, hr, at, hu, fr, de…)
+     lat/lng: a rajzszög helye fokban. */
   travels: [
-    { folder: "olaszorszag",   country: "Olaszország",  place: "Velence · Burano",  flag: "it", lat: 45.485, lng: 12.417 },
-    { folder: "gorogorszag",   country: "Görögország",  place: "Peloponnészosz",    flag: "gr", lat: 37.04,  lng: 22.11 },
-    { folder: "fuerteventura", country: "Fuerteventura", place: "Kanári-szigetek",  flag: "es", lat: 28.36,  lng: -14.05 },
-    { folder: "gran-canaria",  country: "Gran Canaria", place: "Kanári-szigetek",   flag: "es", lat: 27.92,  lng: -15.60 },
-    { folder: "praga",         country: "Prága",        place: "Csehország",        flag: "cz", lat: 50.075, lng: 14.437 },
-    { folder: "szlovakia",     country: "Szlovákia",    place: "",                  flag: "sk", lat: 48.67,  lng: 19.70 },
-    { folder: "tunezia",       country: "Tunézia",      place: "",                  flag: "tn", lat: 34.0,   lng: 9.5 }
+    { folder: "olaszorszag",    country: "Olaszország",   place: "Velence · Burano", flag: "it", lat: 45.485, lng: 12.417 },
+    { folder: "gorogorszag",    country: "Görögország",   place: "Peloponnészosz",   flag: "gr", lat: 37.04,  lng: 22.11 },
+    { folder: "fuerteventura",  country: "Spanyolország", place: "Fuerteventura",    flag: "es", lat: 28.36,  lng: -14.05 },
+    { folder: "gran-canaria",   country: "Spanyolország", place: "Gran Canaria",     flag: "es", lat: 27.92,  lng: -15.60 },
+    { folder: "praga",          country: "Csehország",    place: "Prága",            flag: "cz", lat: 50.075, lng: 14.437 },
+    { folder: "szlovakia",      country: "Szlovákia",     place: "",                 flag: "sk", lat: 48.67,  lng: 19.70 },
+    { folder: "tunezia",        country: "Tunézia",       place: "",                 flag: "tn", lat: 34.0,   lng: 9.5 },
+    { folder: "pula",           country: "Horvátország",  place: "Pula",             flag: "hr", lat: 44.867, lng: 13.850 },
+    { folder: "rovinj",         country: "Horvátország",  place: "Rovinj",           flag: "hr", lat: 45.081, lng: 13.639 },
+    { folder: "becs",           country: "Ausztria",      place: "Bécs",             flag: "at", lat: 48.208, lng: 16.373 },
+    { folder: "semmering",      country: "Ausztria",      place: "Semmering",        flag: "at", lat: 47.634, lng: 15.830 }
   ],
 
   /* Kezdőpozíció a földgömbön (Magyarország fölött). */

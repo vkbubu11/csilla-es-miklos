@@ -16,7 +16,11 @@ window.FLAGS = (() => {
     at: h3("#C8102E", "#fff", "#C8102E"),
     de: h3("#000", "#DD0000", "#FFCE00"),
     nl: h3("#AE1C28", "#fff", "#21468B"),
-    hr: h3("#FF0000", "#fff", "#171796"),
+    hr: h3("#FF0000", "#fff", "#171796") + (() => {
+          let c = `<rect x="12" y="4.5" width="6" height="7.5" fill="#fff" stroke="#171796" stroke-width=".4"/>`;
+          for (let r = 0; r < 5; r++) for (let q = 0; q < 4; q++) if ((r + q) % 2 === 0) c += `<rect x="${12 + q * 1.5}" y="${4.5 + r * 1.5}" width="1.5" height="1.5" fill="#FF0000"/>`;
+          return c;
+        })(),
     pl: `<rect width="30" height="10" fill="#fff"/><rect y="10" width="30" height="10" fill="#DC143C"/>`,
     cz: `<rect width="30" height="10" fill="#fff"/><rect y="10" width="30" height="10" fill="#D7141A"/><path d="M0 0 L15 10 L0 20Z" fill="#11457E"/>`,
     es: `<rect width="30" height="20" fill="#AA151B"/><rect y="5" width="30" height="10" fill="#F1BF00"/>`,

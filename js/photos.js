@@ -9,6 +9,7 @@ window.PHOTOS = {
   }
  ],
  "travels": {
+  "becs": [],
   "fuerteventura": [],
   "gorogorszag": [],
   "gran-canaria": [],
@@ -21,6 +22,9 @@ window.PHOTOS = {
    }
   ],
   "praga": [],
+  "pula": [],
+  "rovinj": [],
+  "semmering": [],
   "szlovakia": [],
   "tunezia": []
  }
