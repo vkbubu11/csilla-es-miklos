@@ -39,9 +39,10 @@ const COLUMNS = [
   ['szallas',    'Szállás'],
   ['allergia',   'Ételallergia / étkezési igény'],
   ['zene',       'Zenekérés'],
-  ['uzenet',     'Üzenet'],
-  ['szinvilag',  'Választott színvilág']
+  ['uzenet',     'Üzenet']
 ];
+
+const VERZIO = 'v4 (fejléc szerinti oszlopok, ételallergia)';
 
 function doPost(e) {
   try {
@@ -57,7 +58,7 @@ function doPost(e) {
 }
 
 function doGet() {
-  return json_({ ok: true, info: 'Csilla & Miklós végpont működik.' });
+  return json_({ ok: true, info: 'Csilla & Miklós végpont működik.', verzio: VERZIO });
 }
 
 /* ---------- Visszajelzés ---------- */
@@ -137,9 +138,39 @@ function json_(obj) {
   return ContentService.createTextOutput(JSON.stringify(obj)).setMimeType(ContentService.MimeType.JSON);
 }
 
+/**
+ * EGYSZERI RENDEZÉS – futtasd egyszer a szerkesztőből.
+ * A korábbi szkriptverziók pozíció szerint írtak, ezért a régi sorokban az adatok
+ * elcsúsztak (pl. az üzenet az „E-mail” oszlopba került). Ez a függvény a régi
+ * sorokat a helyükre teszi, és a fejlécet az új oszlopokra cseréli
+ * (E-mail, Telefon, Választott színvilág nélkül; Ételallergia oszloppal).
+ */
+function tablazatRendezese() {
+  const sh = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(SHEET_NAME);
+  if (!sh) return Logger.log('Nincs „' + SHEET_NAME + '” lap.');
+  const header = sh.getRange(1, 1, 1, sh.getLastColumn()).getValues()[0].map(String);
+  if (header.indexOf('E-mail') < 0 && header.indexOf('Választott színvilág') < 0) return Logger.log('Már rendezve van.');
+  // a régi (pozíció szerinti) szkript sorrendje:
+  const regi = ['_ido', 'nev', 'reszvetel', 'felnottek', 'gyerekek', 'kiserok', 'szallas', 'zene', 'uzenet', 'szinvilag'];
+  const n = sh.getLastRow() - 1;
+  const adatok = n > 0 ? sh.getRange(2, 1, n, Math.max(regi.length, sh.getLastColumn())).getValues() : [];
+  const ujSorok = adatok.map(r => {
+    const o = {}; regi.forEach((k, i) => o[k] = r[i]);
+    return COLUMNS.map(([k]) => o[k] !== undefined ? o[k] : '');
+  });
+  sh.clear();
+  sh.getRange(1, 1, 1, COLUMNS.length).setValues([COLUMNS.map(c => c[1])])
+    .setFontWeight('bold').setBackground('#1F2A44').setFontColor('#FFFFFF');
+  if (ujSorok.length) sh.getRange(2, 1, ujSorok.length, COLUMNS.length).setValues(ujSorok);
+  if (sh.getMaxColumns() > COLUMNS.length) sh.deleteColumns(COLUMNS.length + 1, sh.getMaxColumns() - COLUMNS.length);
+  sh.setFrozenRows(1);
+  sh.getRange('A:A').setNumberFormat('yyyy.mm.dd hh:mm');
+  Logger.log(ujSorok.length + ' sor rendezve.');
+}
+
 /** Kézi próba: futtasd egyszer a szerkesztőből – egy tesztsort és egy próbaképet ír. */
 function proba() {
-  visszajelzes_({ nev: 'Teszt Elek', reszvetel: 'Igen, ott leszek', felnottek: '2', gyerekek: '0', szinvilag: 'Sötétkék & arany' });
+  visszajelzes_({ nev: 'Teszt Elek', reszvetel: 'Igen, ott leszek', felnottek: '2', gyerekek: '0', allergia: 'teszt' });
   const png = Utilities.base64Encode(Utilities.newBlob('proba').getBytes());
   Logger.log(DriveApp.getFolderById(FOTO_MAPPA_ID).getName() + ' mappa elérhető.');
   Logger.log(JSON.stringify(feltoltes_({ type: 'image/png', data: png, filename: 'proba.png', name: 'Teszt' })));

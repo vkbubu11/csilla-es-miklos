@@ -291,8 +291,7 @@
         szallas: yes ? (f.querySelector('input[name="szallas"]:checked') || {}).value || "" : "",
         allergia: yes ? f.allergia.value.trim() : "",
         zene: yes ? f.zene.value.trim() : "",
-        uzenet: f.uzenet.value.trim(),
-        szinvilag: currentPalette.name
+        uzenet: f.uzenet.value.trim()
       };
 
       btn.disabled = true; btn.textContent = "Küldés…";
