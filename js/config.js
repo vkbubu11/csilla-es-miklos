@@ -12,26 +12,28 @@ window.WEDDING = {
      Amíg üres, az űrlap és a fotófeltöltő csak próbaüzemben fut. */
   scriptUrl: "https://script.google.com/macros/s/AKfycbzp7QIuhVA2jOf4w1VmISq1ktKBYM_Gkuq7-lw60xtq9M8zy2Da0IapilurtTd2QadDrw/exec",
 
-  /* Visszajelzési határidő – üresen hagyva nem jelenik meg. Pl.: "2027. április 30." */
-  rsvpDeadline: "",
+  /* Visszajelzési határidő – üresen hagyva nem jelenik meg. */
+  rsvpDeadline: "2027. február 5-ig",
 
   /* Helyszínek */
   venues: [
-    { title: "Szertartás", place: "Vitnyédi templom", when: "16:00",
+    { title: "Vendégvárás", place: "Vitnyéd", when: "16:00 · Szent István király utca 10.",
+      map: "https://www.google.com/maps/search/?api=1&query=Vitny%C3%A9d%2C+Szent+Istv%C3%A1n+kir%C3%A1ly+utca+10" },
+    { title: "Szertartás", place: "Vitnyédi templom", when: "17:00",
       map: "https://www.google.com/maps/search/?api=1&query=Vitny%C3%A9d+templom" },
-    { title: "Ünnepi vacsora", place: "Kantár Fogadó", when: "a szertartás után",
-      map: "https://www.google.com/maps/search/?api=1&query=Kant%C3%A1r+Fogad%C3%B3" }
+    { title: "Ünnepi vacsora", place: "Halász vendéglő", when: "20:00 · Kisfalud",
+      map: "https://www.google.com/maps/search/?api=1&query=Hal%C3%A1sz+vend%C3%A9gl%C5%91+Kisfalud" }
   ],
 
-  /* A nap menete – a 16:00 biztos, a többi időpont még javaslat. */
-  /* icon: rings, cheers, dinner, dance, cake, dress, music, camera, car, church, heart */
+  /* A nap menete.
+     icon: rings, cheers, dinner, dance, cake, dress, music, camera, car, church, heart */
   program: [
-    { time: "16:00", title: "Szertartás",       note: "Vitnyédi templom",        icon: "rings" },
-    { time: "17:30", title: "Vendégvárás",      note: "Kantár Fogadó",           icon: "cheers" },
-    { time: "19:00", title: "Vacsora",          note: "ünnepi menü",             icon: "dinner" },
-    { time: "21:00", title: "Nyitótánc",        note: "az ifjú pár első tánca",  icon: "dance" },
-    { time: "22:30", title: "Torta",            note: "édes pillanat",           icon: "cake" },
-    { time: "24:00", title: "Menyasszonytánc",  note: "és tánc hajnalig",        icon: "dress" }
+    { time: "16:00", title: "Vendégvárás",      note: "Vitnyéd, Szent István király utca 10.", icon: "cheers" },
+    { time: "17:00", title: "Szertartás",       note: "Vitnyédi templom",                      icon: "rings" },
+    { time: "20:00", title: "Vacsora",          note: "Halász vendéglő – Kisfalud",            icon: "dinner" },
+    { time: "21:00", title: "Nyitótánc",        note: "az ifjú pár első tánca",                icon: "dance" },
+    { time: "22:30", title: "Torta",            note: "édes pillanat",                         icon: "cake" },
+    { time: "24:00", title: "Menyasszonytánc",  note: "és tánc hajnalig",                      icon: "dress" }
   ],
 
   /* Színvilágok – ugyanaz a 10 kombináció, mint a meghívón.

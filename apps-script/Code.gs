@@ -37,6 +37,7 @@ const COLUMNS = [
   ['gyerekek',   'Gyerekek'],
   ['kiserok',    'Kísérők'],
   ['szallas',    'Szállás'],
+  ['allergia',   'Ételallergia / étkezési igény'],
   ['zene',       'Zenekérés'],
   ['uzenet',     'Üzenet'],
   ['szinvilag',  'Választott színvilág']
@@ -66,7 +67,22 @@ function visszajelzes_(p) {
   lock.waitLock(20000);
   try {
     const sheet = getSheet_(SHEET_NAME, COLUMNS.map(c => c[1]));
-    sheet.appendRow(COLUMNS.map(([key]) => key === '_ido' ? new Date() : safe_(p[key])));
+    // Oszlopok a FEJLÉC NEVE alapján: ha valaki átrendezi/törli az oszlopokat a táblázatban,
+    // vagy új mező jön, akkor sem csúsznak el az adatok. A hiányzó fejlécet a végére teszi.
+    let headers = sheet.getRange(1, 1, 1, Math.max(1, sheet.getLastColumn())).getValues()[0].map(String);
+    COLUMNS.forEach(([, title]) => {
+      if (headers.indexOf(title) < 0) {
+        sheet.getRange(1, headers.length + 1).setValue(title)
+          .setFontWeight('bold').setBackground('#1F2A44').setFontColor('#FFFFFF');
+        headers.push(title);
+      }
+    });
+    const row = headers.map(h => {
+      const col = COLUMNS.find(c => c[1] === h);
+      if (!col) return '';
+      return col[0] === '_ido' ? new Date() : safe_(p[col[0]]);
+    });
+    sheet.appendRow(row);
     return { ok: true };
   } finally {
     lock.releaseLock();

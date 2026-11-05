@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Great+Vibes&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css?v=20261104c">
+  <link rel="stylesheet" href="css/style.css?v=20261105a">
 </head>
 <body>
 
@@ -30,11 +30,11 @@
     <!-- Nyitókép -->
     <section class="hero">
       <div class="hero__photo">
-        <img src="img/hero.jpg?v=20261104c" alt="Csilla és Miklós" loading="eager">
+        <img src="img/hero.jpg?v=20261105a" alt="Csilla és Miklós" loading="eager">
       </div>
       <div class="band"><span>Igent mondunk</span></div>
       <div class="hero__text">
-        <p class="eyebrow">Szeretettel meghívunk, hogy velünk ünnepelj<br>házasságkötésünk alkalmából</p>
+        <p class="eyebrow">Sok szeretettel meghívunk Benneteket, hogy velünk ünnepeljetek<br>házasságkötésünk alkalmából!</p>
         <h1 class="names">
           <span>Csilla</span>
           <span class="amp">&amp;</span>
@@ -52,7 +52,7 @@
     <!-- Részletek -->
     <section class="section" id="reszletek">
       <h2 class="title">A nagy nap</h2>
-      <p class="script-sub">nagy szeretettel…</p>
+      <p class="lead" style="margin-top:1.2rem !important">Közös életünk első óráit töltsétek velünk, egy vacsorával egybekötött mulatozáson!</p>
       <div class="cards" id="venues"></div>
     </section>
 
@@ -89,7 +89,8 @@
     <!-- Visszajelzés -->
     <section class="section" id="visszajelzes">
       <h2 class="title">Visszajelzés</h2>
-      <p class="lead" id="rsvpLead">Kérjük, jelezd, hogy számíthatunk-e rád!</p>
+      <p class="lead" id="rsvpLead">Kérjük, jelezzétek, hogy számíthatunk-e rátok!</p>
+      <p class="lead" style="margin-top:-1.6rem !important">Szállásigényeiteket és ételallergiáitokat is jelezzétek felénk.</p>
 
       <form class="rsvp" id="rsvpForm" novalidate>
         <div class="field">
@@ -130,6 +131,11 @@
               <label><input type="radio" name="szallas" value="Nem" checked> <span>Nem</span></label>
             </div>
           </fieldset>
+
+          <div class="field">
+            <label for="f-allergy">Ételallergia, étkezési igény</label>
+            <input id="f-allergy" name="allergia" type="text" placeholder="pl. gluténérzékenység, laktózmentes, vegetáriánus – ha nincs, hagyd üresen">
+          </div>
 
           <div class="field">
             <label for="f-song">Melyik zenére táncolnál biztosan?</label>
@@ -181,9 +187,9 @@
 
   <script src="js/vendor/globe.gl.min.js" defer></script>
   <script src="js/globe-textures.js" defer></script>
-  <script src="js/flags.js?v=20261104c" defer></script>
-  <script src="js/config.js?v=20261104c" defer></script>
-  <script src="js/photos.js?v=20261104c" defer></script>
-  <script src="js/app.js?v=20261104c" defer></script>
+  <script src="js/flags.js?v=20261105a" defer></script>
+  <script src="js/config.js?v=20261105a" defer></script>
+  <script src="js/photos.js?v=20261105a" defer></script>
+  <script src="js/app.js?v=20261105a" defer></script>
 </body>
 </html>

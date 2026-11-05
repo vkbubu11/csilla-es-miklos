@@ -85,7 +85,7 @@
     $("#timeline").innerHTML = W.program.map(p => `
       <li class="reveal"><span class="t">${esc(p.time)}</span><span class="ico">${icon(p.icon)}</span>
       <span class="d"><b>${esc(p.title)}</b><i>${esc(p.note)}</i></span></li>`).join("");
-    if (W.rsvpDeadline) $("#rsvpLead").textContent = `Kérjük, ${W.rsvpDeadline}-ig jelezd, hogy számíthatunk-e rád!`;
+    if (W.rsvpDeadline) $("#rsvpLead").textContent = `Kérjük, ${W.rsvpDeadline} jelezzétek, hogy számíthatunk-e rátok!`;
   }
 
   /* ---------------- Képnéző ---------------- */
@@ -289,6 +289,7 @@
         gyerekek: yes ? f.gyerekek.value : "0",
         kiserok: yes ? f.kiserok.value.trim() : "",
         szallas: yes ? (f.querySelector('input[name="szallas"]:checked') || {}).value || "" : "",
+        allergia: yes ? f.allergia.value.trim() : "",
         zene: yes ? f.zene.value.trim() : "",
         uzenet: f.uzenet.value.trim(),
         szinvilag: currentPalette.name
