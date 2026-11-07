@@ -2,7 +2,14 @@
 window.PHOTOS = {
  "gallery": [],
  "travels": {
-  "becs": [],
+  "becs": [
+   {
+    "src": "img/utazasok/becs/01_schonbrunn.jpg",
+    "thumb": "img/utazasok/becs/thumbs/01_schonbrunn.jpg",
+    "w": 600,
+    "h": 277
+   }
+  ],
   "fuerteventura": [
    {
     "src": "img/utazasok/fuerteventura/01_fuerteventura.jpg",
@@ -33,6 +40,18 @@ window.PHOTOS = {
     "thumb": "img/utazasok/fuerteventura/thumbs/05_fuerteventura.jpg",
     "w": 554,
     "h": 1200
+   },
+   {
+    "src": "img/utazasok/fuerteventura/06_fuerteventura.jpg",
+    "thumb": "img/utazasok/fuerteventura/thumbs/06_fuerteventura.jpg",
+    "w": 600,
+    "h": 277
+   },
+   {
+    "src": "img/utazasok/fuerteventura/07_fuerteventura.jpg",
+    "thumb": "img/utazasok/fuerteventura/thumbs/07_fuerteventura.jpg",
+    "w": 600,
+    "h": 277
    }
   ],
   "gorogorszag": [
@@ -41,6 +60,24 @@ window.PHOTOS = {
     "thumb": "img/utazasok/gorogorszag/thumbs/01_gorogorszag.jpg",
     "w": 600,
     "h": 450
+   },
+   {
+    "src": "img/utazasok/gorogorszag/02_gorogorszag.jpg",
+    "thumb": "img/utazasok/gorogorszag/thumbs/02_gorogorszag.jpg",
+    "w": 600,
+    "h": 277
+   },
+   {
+    "src": "img/utazasok/gorogorszag/03_gorogorszag.jpg",
+    "thumb": "img/utazasok/gorogorszag/thumbs/03_gorogorszag.jpg",
+    "w": 600,
+    "h": 277
+   },
+   {
+    "src": "img/utazasok/gorogorszag/04_gorogorszag.jpg",
+    "thumb": "img/utazasok/gorogorszag/thumbs/04_gorogorszag.jpg",
+    "w": 600,
+    "h": 277
    }
   ],
   "gran-canaria": [
@@ -49,6 +86,30 @@ window.PHOTOS = {
     "thumb": "img/utazasok/gran-canaria/thumbs/01_gran-canaria.jpg",
     "w": 600,
     "h": 450
+   },
+   {
+    "src": "img/utazasok/gran-canaria/02_gran-canaria.jpg",
+    "thumb": "img/utazasok/gran-canaria/thumbs/02_gran-canaria.jpg",
+    "w": 600,
+    "h": 277
+   },
+   {
+    "src": "img/utazasok/gran-canaria/03_gran-canaria.jpg",
+    "thumb": "img/utazasok/gran-canaria/thumbs/03_gran-canaria.jpg",
+    "w": 600,
+    "h": 277
+   },
+   {
+    "src": "img/utazasok/gran-canaria/04_gran-canaria.jpg",
+    "thumb": "img/utazasok/gran-canaria/thumbs/04_gran-canaria.jpg",
+    "w": 554,
+    "h": 1200
+   },
+   {
+    "src": "img/utazasok/gran-canaria/05_gran-canaria.jpg",
+    "thumb": "img/utazasok/gran-canaria/thumbs/05_gran-canaria.jpg",
+    "w": 600,
+    "h": 277
    }
   ],
   "olaszorszag": [
@@ -69,7 +130,14 @@ window.PHOTOS = {
    }
   ],
   "rovinj": [],
-  "semmering": [],
+  "semmering": [
+   {
+    "src": "img/utazasok/semmering/01_semmering.jpg",
+    "thumb": "img/utazasok/semmering/thumbs/01_semmering.jpg",
+    "w": 600,
+    "h": 277
+   }
+  ],
   "szlovakia": [
    {
     "src": "img/utazasok/szlovakia/01_szlovakia.jpg",
@@ -88,6 +156,18 @@ window.PHOTOS = {
     "thumb": "img/utazasok/szlovakia/thumbs/03_szlovakia.jpg",
     "w": 600,
     "h": 800
+   },
+   {
+    "src": "img/utazasok/szlovakia/04_szlovakia.jpg",
+    "thumb": "img/utazasok/szlovakia/thumbs/04_szlovakia.jpg",
+    "w": 600,
+    "h": 277
+   },
+   {
+    "src": "img/utazasok/szlovakia/05_szlovakia.jpg",
+    "thumb": "img/utazasok/szlovakia/thumbs/05_szlovakia.jpg",
+    "w": 600,
+    "h": 277
    }
   ],
   "tunezia": [
@@ -102,6 +182,18 @@ window.PHOTOS = {
     "thumb": "img/utazasok/tunezia/thumbs/02_tunezia.jpg",
     "w": 600,
     "h": 450
+   },
+   {
+    "src": "img/utazasok/tunezia/03_tunezia.jpg",
+    "thumb": "img/utazasok/tunezia/thumbs/03_tunezia.jpg",
+    "w": 600,
+    "h": 277
+   },
+   {
+    "src": "img/utazasok/tunezia/04_tunezia.jpg",
+    "thumb": "img/utazasok/tunezia/thumbs/04_tunezia.jpg",
+    "w": 600,
+    "h": 277
    }
   ]
  }

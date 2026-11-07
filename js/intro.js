@@ -74,8 +74,6 @@
     el.style.setProperty("--u", (w / 127) + "px");                 // 1 mm a nyomtatott lapon
     const fit = Math.min(1, (vw * 0.96) / (w * 322 / 127));
     el.style.setProperty("--fit", fit.toFixed(3)); // kinyitott lap ráfér
-    el.style.setProperty("--ts", Math.min((vw * 0.94) / w, (vh * 0.86) / (w * 178 / 127)).toFixed(3)); // egy oldal kitölti a kijelzőt
-    narrow = fit < 0.62; // keskeny (álló telefon) kijelző: oldalanként mutatjuk
   }
 
   const done = () => {
@@ -83,7 +81,7 @@
     el.remove();
   };
 
-  let opened = false, narrow = false;
+  let opened = false;
   function open() {
     if (opened) return; opened = true;
     const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -91,16 +89,8 @@
     if (reduce) { el.classList.add("is-leaving"); setTimeout(done, 400); return; }
     setTimeout(() => el.classList.add("s-flap"), 2050);
     setTimeout(() => el.classList.add("s-door"), 2900);
-    if (!narrow) {
-      setTimeout(() => el.classList.add("is-leaving"), 5350);
-      setTimeout(done, 8450);
-      return;
-    }
-    // telefon: bal oldal (visszajelzés) → közép (meghívó) → jobb oldal (nap menete) → ráközelítés
-    const tour = (cls, t) => setTimeout(() => { el.classList.remove("t-left", "t-center", "t-right"); if (cls) el.classList.add(cls); }, t);
-    tour("t-left", 4400); tour("t-center", 7000); tour("t-right", 9600);
-    setTimeout(() => { el.classList.remove("t-right"); el.classList.add("is-leaving"); }, 12400);
-    setTimeout(done, 15500);
+    setTimeout(() => el.classList.add("is-leaving"), 5350);
+    setTimeout(done, 8450);
   }
 
   function start() {
