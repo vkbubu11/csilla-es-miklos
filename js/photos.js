@@ -130,14 +130,7 @@ window.PHOTOS = {
    }
   ],
   "rovinj": [],
-  "semmering": [
-   {
-    "src": "img/utazasok/semmering/01_semmering.jpg",
-    "thumb": "img/utazasok/semmering/thumbs/01_semmering.jpg",
-    "w": 600,
-    "h": 277
-   }
-  ],
+  "semmering": [],
   "szlovakia": [
    {
     "src": "img/utazasok/szlovakia/01_szlovakia.jpg",
