@@ -90,10 +90,10 @@
     const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
     el.classList.add("is-opening");
     if (reduce) { el.classList.add("is-leaving"); setTimeout(done, 400); return; }
-    setTimeout(() => el.classList.add("s-flap"), 1450);
-    setTimeout(() => el.classList.add("s-door"), 2300);
-    setTimeout(() => el.classList.add("is-leaving"), 4750);
-    setTimeout(done, 6900);
+    setTimeout(() => el.classList.add("s-flap"), 2050);
+    setTimeout(() => el.classList.add("s-door"), 2900);
+    setTimeout(() => el.classList.add("is-leaving"), 5350);
+    setTimeout(done, 8450);
   }
 
   function start() {
