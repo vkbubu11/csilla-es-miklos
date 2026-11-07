@@ -18,13 +18,7 @@
     document.querySelectorAll(".theme__opt").forEach(b => b.setAttribute("aria-pressed", b.dataset.id === p.id));
     if (save) { try { localStorage.setItem(KEY, p.id); } catch (e) {} }
   }
-  $("#themeList").innerHTML = W.palettes.map(p => `<button class="theme__opt" data-id="${p.id}" aria-pressed="false">
-      <span class="swatch"><i style="background:${p.band}"></i><i style="background:${p.rule}"></i><i style="background:${p.accent}"></i><i style="background:${p.bg}"></i></span>${p.name}</button>`).join("");
-  $("#themeList").onclick = e => { const b = e.target.closest(".theme__opt"); if (b) applyTheme(b.dataset.id, true); };
-  $("#themeToggle").onclick = () => { const h = !$("#themePanel").hidden; $("#themePanel").hidden = h; $("#themeToggle").setAttribute("aria-expanded", !h); };
-  document.addEventListener("click", e => { if (!e.target.closest("#theme")) $("#themePanel").hidden = true; });
-  let saved = null; try { saved = localStorage.getItem(KEY); } catch (e) {}
-  applyTheme(new URLSearchParams(location.search).get("szin") || saved || (W.palettes[0] || {}).id, false);
+  applyTheme("emerald", false); // végleges színvilág
   try { const n = localStorage.getItem("cm-name"); if (n) $("#who").value = n; } catch (e) {}
 
   /* ---------- fájlok kiválasztása ---------- */

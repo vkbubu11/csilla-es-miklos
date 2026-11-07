@@ -30,6 +30,7 @@ window.WEDDING = {
   program: [
     { time: "16:00", title: "Vendégvárás",      note: "Vitnyéd, Szent István király utca 10.", icon: "cheers" },
     { time: "17:00", title: "Szertartás",       note: "Vitnyédi templom",                      icon: "rings" },
+    { time: "18:30", title: "Csoportképek",     note: "gratulációk fogadása",                  icon: "camera" },
     { time: "20:00", title: "Vacsora",          note: "Halász vendéglő – Kisfalud",            icon: "dinner" },
     { time: "21:00", title: "Nyitótánc",        note: "az ifjú pár első tánca",                icon: "dance" },
     { time: "22:30", title: "Torta",            note: "édes pillanat",                         icon: "cake" },

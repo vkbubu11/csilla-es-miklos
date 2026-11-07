@@ -5,12 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Csilla &amp; Miklós · 2027. június 5.</title>
   <meta name="description" content="Budai Csilla és Vincze Miklós esküvője – 2027. június 5., Vitnyéd">
-  <meta name="theme-color" content="#1F2A44">
+  <meta name="theme-color" content="#185844">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Great+Vibes&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css?v=20261107e">
-  <link rel="stylesheet" href="css/intro.css?v=20261107c">
+  <link rel="stylesheet" href="css/style.css?v=20261107f">
+  <link rel="stylesheet" href="css/intro.css?v=20261107f">
 </head>
 <body>
 
@@ -31,7 +31,7 @@
     <!-- Nyitókép -->
     <section class="hero">
       <div class="hero__photo">
-        <img src="img/hero.jpg?v=20261107e" alt="Csilla és Miklós" loading="eager">
+        <img src="img/hero.jpg?v=20261107f" alt="Csilla és Miklós" loading="eager">
       </div>
       <div class="band"><span>Igent mondunk</span></div>
       <div class="hero__text">
@@ -68,7 +68,13 @@
       <h2 class="title">Utazásaink a világ körül</h2>
       <p class="lead">Forgasd meg a földgömböt, és kattints egy rajzszögre vagy egy helyre – megmutatjuk, mit láttunk ott együtt.</p>
       <div class="globe-wrap">
-        <div id="globe" class="globe" role="img" aria-label="Interaktív földgömb az utazásainkkal"></div>
+        <div class="globe-box">
+          <div id="globe" class="globe" role="img" aria-label="Interaktív földgömb az utazásainkkal"></div>
+          <div class="globe-zoom" aria-label="Nagyítás">
+            <button type="button" id="zoomIn" aria-label="Nagyítás">+</button>
+            <button type="button" id="zoomOut" aria-label="Kicsinyítés">−</button>
+          </div>
+        </div>
         <aside class="trips">
           <ul class="trip-chips" id="tripList" aria-label="Helyek, ahol jártunk"></ul>
           <div class="trip-detail" id="tripDetail" aria-live="polite"></div>
@@ -163,17 +169,6 @@
     <p>2027. június 5. · Vitnyéd</p>
   </footer>
 
-  <!-- Színválasztó -->
-  <div class="theme" id="theme">
-    <button class="theme__toggle" id="themeToggle" aria-expanded="false" aria-controls="themePanel" title="Színvilág választása">
-      <span class="theme__dot"></span><span class="theme__label">Színek</span>
-    </button>
-    <div class="theme__panel" id="themePanel" hidden>
-      <p>Válassz színvilágot</p>
-      <div class="theme__list" id="themeList"></div>
-    </div>
-  </div>
-
   <!-- Képnéző -->
   <div class="lightbox" id="lightbox" hidden role="dialog" aria-modal="true" aria-label="Képnéző">
     <button class="lb__close" id="lbClose" aria-label="Bezárás">×</button>
@@ -188,10 +183,10 @@
 
   <script src="js/vendor/globe.gl.min.js" defer></script>
   <script src="js/globe-textures.js" defer></script>
-  <script src="js/flags.js?v=20261107e" defer></script>
-  <script src="js/config.js?v=20261107e" defer></script>
-  <script src="js/intro.js?v=20261107c" defer></script>
-  <script src="js/photos.js?v=20261107e" defer></script>
-  <script src="js/app.js?v=20261107e" defer></script>
+  <script src="js/flags.js?v=20261107f" defer></script>
+  <script src="js/config.js?v=20261107f" defer></script>
+  <script src="js/intro.js?v=20261107f" defer></script>
+  <script src="js/photos.js?v=20261107f" defer></script>
+  <script src="js/app.js?v=20261107f" defer></script>
 </body>
 </html>

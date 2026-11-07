@@ -24,25 +24,10 @@
     onThemeChange(p);
   }
 
+  // Végleges színvilág: Smaragd & antik arany (a színválasztó kikerült)
   function initTheme() {
-    const list = $("#themeList");
-    list.innerHTML = W.palettes.map(p => `
-      <button class="theme__opt" data-id="${p.id}" aria-pressed="false">
-        <span class="swatch"><i style="background:${p.band}"></i><i style="background:${p.rule}"></i><i style="background:${p.accent}"></i><i style="background:${p.bg}"></i></span>
-        ${esc(p.name)}
-      </button>`).join("");
-    list.addEventListener("click", e => { const b = e.target.closest(".theme__opt"); if (b) applyTheme(b.dataset.id); });
-
-    const toggle = $("#themeToggle"), panel = $("#themePanel");
-    const setOpen = open => { panel.hidden = !open; toggle.setAttribute("aria-expanded", open); };
-    toggle.addEventListener("click", () => setOpen(panel.hidden));
-    document.addEventListener("click", e => { if (!e.target.closest("#theme")) setOpen(false); });
-    document.addEventListener("keydown", e => { if (e.key === "Escape") setOpen(false); });
-
-    // URL-ből is választható: ...?szin=sage
-    const fromUrl = new URLSearchParams(location.search).get("szin");
-    let saved = null; try { saved = localStorage.getItem(THEME_KEY); } catch (e) {}
-    applyTheme(fromUrl || saved || W.palettes[0].id, !!fromUrl);
+    try { localStorage.removeItem(THEME_KEY); } catch (e) {}
+    applyTheme("emerald", false);
   }
 
   /* ---------------- Visszaszámláló ---------------- */
@@ -59,6 +44,7 @@
 
   /* ---------------- Ikonok a programhoz ---------------- */
   const ICONS = {
+    camera: '<path d="M3.5 8.5a2 2 0 0 1 2-2h2.2l1.5-2h5.6l1.5 2h2.2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-13a2 2 0 0 1-2-2z"/><circle cx="12" cy="13" r="3.6"/><path d="M17.6 9.4h.01"/>',
     rings:  '<circle cx="9" cy="14.5" r="5.5"/><circle cx="15" cy="14.5" r="5.5"/><path d="M13.2 6.2 15 3.6l1.8 2.6L15 8.6z"/><path d="M13.2 6.2h3.6"/>',
     cheers: '<path d="M4.5 3.5h5l-.4 4.6a2.1 2.1 0 0 1-4.2 0z"/><path d="M7 10.2v8.3M5 18.5h4"/><path d="M14.5 3.5h5l-.4 4.6a2.1 2.1 0 0 1-4.2 0z"/><path d="M17 10.2v8.3M15 18.5h4"/><path d="M12 2v2M10.6 5.2 9.9 4.5M13.4 5.2l.7-.7"/>',
     dinner: '<circle cx="12" cy="12" r="5.2"/><circle cx="12" cy="12" r="2.6"/><path d="M3 3.5v5a1.6 1.6 0 0 0 3.2 0v-5M4.6 3.5v17"/><path d="M20.5 3.5c-1.6 1-2.3 3-2.3 6.5h2.3v10.5"/>',
@@ -244,8 +230,29 @@
       .pointOfView(W.globeStart || { lat: 44, lng: 14, altitude: 1.9 });
 
     const c = globe.controls();
-    c.autoRotate = true; c.autoRotateSpeed = 0.35; c.enableZoom = true; c.minDistance = 130; c.maxDistance = 600;
+    c.autoRotate = true; c.autoRotateSpeed = 0.35; c.enableZoom = true; c.minDistance = 120; c.maxDistance = 600;
+    c.touches = { ONE: 0, TWO: 1 }; // 1 ujj: forgatás; 2 ujj: a saját csípéses nagyításunk kezeli
+    el.__globe = globe;
     el.addEventListener("pointerdown", () => { c.autoRotate = false; });
+
+    // Nagyítás: +/− gombok és kétujjas csípés (telefonon is)
+    const MIN_ALT = 0.2, MAX_ALT = 5;
+    const clampAlt = a => Math.max(MIN_ALT, Math.min(MAX_ALT, a));
+    const zoomBy = (f, ms = 450) => { c.autoRotate = false; const pov = globe.pointOfView(); globe.pointOfView({ ...pov, altitude: clampAlt(pov.altitude * f) }, ms); };
+    $("#zoomIn").addEventListener("click", () => zoomBy(0.65));
+    $("#zoomOut").addEventListener("click", () => zoomBy(1.55));
+    let pinch0 = 0, alt0 = 0;
+    const span = t => Math.hypot(t[0].clientX - t[1].clientX, t[0].clientY - t[1].clientY);
+    el.addEventListener("touchstart", e => {
+      if (e.touches.length === 2) { pinch0 = span(e.touches); alt0 = globe.pointOfView().altitude; c.autoRotate = false; }
+    }, { passive: true, capture: true });
+    el.addEventListener("touchmove", e => {
+      if (e.touches.length !== 2 || !pinch0) return;
+      e.preventDefault();
+      const pov = globe.pointOfView();
+      globe.pointOfView({ ...pov, altitude: clampAlt(alt0 * Math.pow(pinch0 / span(e.touches), 1.4)) });
+    }, { passive: false, capture: true });
+    el.addEventListener("touchend", e => { if (e.touches.length < 2) pinch0 = 0; }, { passive: true, capture: true });
     const size = () => { const w = el.clientWidth; globe.width(w).height(w); };
     size(); new ResizeObserver(size).observe(el);
     setTimeout(() => select(first, { fly: false }), 300);

@@ -1,14 +1,11 @@
 /* Nyitó animáció: a smaragd meghívó kinyílik, mögötte a weboldal.
-   Csak az első látogatáskor jelenik meg (újra: ...?intro=1). */
+   Minden megnyitáskor lejátszódik (kihagyás teszteléshez: ...?intro=0). */
 (() => {
   "use strict";
-  const KEY = "cm-intro-v1";
-  const force = /[?&]intro=1/.test(location.search);
-  let seen = false; try { seen = localStorage.getItem(KEY) === "1"; } catch (e) {}
-  if (seen && !force) return;
+  if (/[?&]intro=0/.test(location.search)) return;
 
   const W = window.WEDDING || {};
-  const prog = (W.program || []).slice(0, 6);
+  const prog = (W.program || []).slice(0, 7);
   const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
   const deadline = W.rsvpDeadline ? esc(W.rsvpDeadline.replace(/^\d{4}\.\s*/, "")) : "";
 
@@ -75,16 +72,18 @@
     const w = Math.min(vh * 0.74 * 127 / 178, vw * 0.84, 470);
     el.style.setProperty("--w", w + "px");
     el.style.setProperty("--u", (w / 127) + "px");                 // 1 mm a nyomtatott lapon
-    el.style.setProperty("--fit", Math.min(1, (vw * 0.96) / (w * 322 / 127)).toFixed(3)); // kinyitott lap ráfér
+    const fit = Math.min(1, (vw * 0.96) / (w * 322 / 127));
+    el.style.setProperty("--fit", fit.toFixed(3)); // kinyitott lap ráfér
+    el.style.setProperty("--ts", Math.min((vw * 0.94) / w, (vh * 0.86) / (w * 178 / 127)).toFixed(3)); // egy oldal kitölti a kijelzőt
+    narrow = fit < 0.62; // keskeny (álló telefon) kijelző: oldalanként mutatjuk
   }
 
   const done = () => {
-    try { localStorage.setItem(KEY, "1"); } catch (e) {}
     document.documentElement.classList.remove("intro-lock");
     el.remove();
   };
 
-  let opened = false;
+  let opened = false, narrow = false;
   function open() {
     if (opened) return; opened = true;
     const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -92,8 +91,16 @@
     if (reduce) { el.classList.add("is-leaving"); setTimeout(done, 400); return; }
     setTimeout(() => el.classList.add("s-flap"), 2050);
     setTimeout(() => el.classList.add("s-door"), 2900);
-    setTimeout(() => el.classList.add("is-leaving"), 5350);
-    setTimeout(done, 8450);
+    if (!narrow) {
+      setTimeout(() => el.classList.add("is-leaving"), 5350);
+      setTimeout(done, 8450);
+      return;
+    }
+    // telefon: bal oldal (visszajelzés) → közép (meghívó) → jobb oldal (nap menete) → ráközelítés
+    const tour = (cls, t) => setTimeout(() => { el.classList.remove("t-left", "t-center", "t-right"); if (cls) el.classList.add(cls); }, t);
+    tour("t-left", 4400); tour("t-center", 7000); tour("t-right", 9600);
+    setTimeout(() => { el.classList.remove("t-right"); el.classList.add("is-leaving"); }, 12400);
+    setTimeout(done, 15500);
   }
 
   function start() {
