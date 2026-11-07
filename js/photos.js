@@ -1,19 +1,6 @@
 /* Automatikusan generált fájl – a kepek_frissitese.py írja. */
 window.PHOTOS = {
- "gallery": [
-  {
-   "src": "img/galeria/01_burano.jpg",
-   "thumb": "img/galeria/thumbs/01_burano.jpg",
-   "w": 600,
-   "h": 800
-  },
-  {
-   "src": "img/galeria/02_hajon.jpg",
-   "thumb": "img/galeria/thumbs/02_hajon.jpg",
-   "w": 554,
-   "h": 1200
-  }
- ],
+ "gallery": [],
  "travels": {
   "becs": [],
   "fuerteventura": [
