@@ -74,3 +74,10 @@ lavender, terracotta, emerald). Az alapértelmezett szín a `palettes` lista els
 Bármilyen statikus tárhely jó, a teljes mappát kell feltölteni:
 GitHub Pages, Netlify (a mappát a netlify.com/drop oldalra húzva), vagy a meglévő
 WordPress-tárhely egy almappája.
+
+## 6. Nyitó animáció
+
+Az első látogatáskor a smaragd meghívó jelenik meg (`js/intro.js`, `css/intro.css`):
+koppintásra lecsúszik a szalag, kinyílik a fotós szárny és a jobb oldali panel, majd
+megnyílik a weboldal. Böngészőnként csak egyszer jelenik meg; újra megnézni:
+`…/csilla-es-miklos/?intro=1`. A „Kihagyás” gombbal átugorható.
