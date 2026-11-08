@@ -8,6 +8,18 @@ window.PHOTOS = {
     "thumb": "img/utazasok/becs/thumbs/01_schonbrunn.jpg",
     "w": 600,
     "h": 277
+   },
+   {
+    "src": "img/utazasok/becs/02_schonbrunn.jpg",
+    "thumb": "img/utazasok/becs/thumbs/02_schonbrunn.jpg",
+    "w": 554,
+    "h": 1200
+   },
+   {
+    "src": "img/utazasok/becs/03_schonbrunn.jpg",
+    "thumb": "img/utazasok/becs/thumbs/03_schonbrunn.jpg",
+    "w": 554,
+    "h": 1200
    }
   ],
   "fuerteventura": [
@@ -127,6 +139,12 @@ window.PHOTOS = {
     "thumb": "img/utazasok/pula/thumbs/01_horvatorszag.jpg",
     "w": 600,
     "h": 338
+   },
+   {
+    "src": "img/utazasok/pula/02_horvatorszag.jpg",
+    "thumb": "img/utazasok/pula/thumbs/02_horvatorszag.jpg",
+    "w": 554,
+    "h": 1200
    }
   ],
   "rovinj": [],
